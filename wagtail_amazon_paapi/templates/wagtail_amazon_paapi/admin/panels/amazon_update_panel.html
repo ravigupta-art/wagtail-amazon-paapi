@@ -1,0 +1,12 @@
+{% load wagtailadmin_tags i18n %}
+<div class="help-block">
+  <p>{% trans "Click the button below to fetch updated data from Amazon." %}</p>
+</div>
+
+{% if snippet.id %}
+<a href="{% url 'wagtail_amazon_paapi:update_amazon_product' snippet.id %}" class="button button-longrunning">
+  {% trans "Update From Amazon API" %}
+</a>
+{% else %}
+<p>{% trans "Save this snippet first before updating from Amazon." %}</p>
+{% endif %}

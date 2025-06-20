@@ -1,0 +1,11 @@
+
+{% with product=self.product %}
+    <div class="amazon-product-snippet">
+        {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.product_title }}">
+        {% endif %}
+        <h3>{{ product.product_title }}</h3>
+        <p>Price: {{ product.price }}</p>
+        <a href="{{ product.affiliate_url }}" target="_blank" rel="noopener sponsored">Buy on Amazon</a>
+    </div>
+{% endwith %}
