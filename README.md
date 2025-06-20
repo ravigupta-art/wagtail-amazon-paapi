@@ -1,211 +1,134 @@
-```
-This Project is regarding a wagtail project that will help users to add amazon products to snippets and those snippets to pages to advertise on their blogs/websites.
-```
-# Wagtail Amazon PA-API Integration
+# wagtail-amazon-paapi
+##### Wagtail Amazon PA-API Integration
+This package provides integration between Wagtail CMS and Amazon's Product Advertising API (PA-API), allowing you to display Amazon products on your Wagtail site with affiliate links.
 
-A **Wagtail** application that integrates with the **Amazon Product Advertising API (PA-API)**, allowing you to easily manage Amazon products in your Wagtail site and embed them into any page. This package consists of:
-
-1. A **snippet model** for storing product data (`AmazonProductSnippet`)  
-2. A **custom block** (`AmazonProductSnippetBlock`) for embedding these products into a `StreamField`  
-3. **Admin panels** and **views** that allow you to fetch or update product data from Amazon with a single click  
-
-Table of Contents:
-- [Features](#features)  
-- [Requirements](#requirements)  
-- [Installation](#installation)  
-- [Configuration](#configuration)  
-- [Usage](#usage)  
-  - [Creating Product Snippets](#creating-product-snippets)  
-  - [Using the StreamField Block](#using-the-streamfield-block)  
-  - [Updating Product Information](#updating-product-information)  
-- [Customizing the Panel Template](#customizing-the-panel-template)  
-- [Customizing the Product Template](#customizing-the-product-template)  
-- [Troubleshooting](#troubleshooting)  
-- [Credits and License](#credits-and-license)
-
----
+Note: This project is not affiliated with or endorsed by Amazon. Use of the AWS Product Advertising API is subject to Amazon Associates Program Policies. 
 
 ## Features
 
-- **Snippets**: Create and store Amazon products via a Wagtail snippet (ASIN, affiliate link, image, price, etc.).  
-- **StreamField Integration**: Embed these snippets in any Wagtail page model using a custom `AmazonProductSnippetBlock`.  
-- **One-Click Update**: A custom admin panel button to refresh product data directly from the Amazon API.  
-- **Permissions**: Secure by default. Only users who can edit snippets can retrieve fresh product data.  
-
----
-
-## Requirements
-
-1. Python **3.8+**  
-2. Django **5.2+**  
-3. Wagtail **7.0+**  
-4. An **Amazon Associates** account with access to PA-API
-
----
+- Store Amazon product data as snippets in Wagtail
+- Fetch product details directly from Amazon's PA-API
+- Display products with customizable styling in your Wagtail pages
+- Update product information with a single click
 
 ## Installation
 
-1. **Install** the package (already in your project):
-    ```bash
-    pip install wagtail-amazon-paapi
-    ```
-2. **Add `wagtail_amazon_paapi`** to your `INSTALLED_APPS` in `settings.py`:
-    ```python
-    INSTALLED_APPS = [
-        # ...
-        'wagtail_amazon_paapi',
-        # ...
-    ]
-    ```
-3. **Migrate**:
-    ```bash
-    python manage.py makemigrations wagtail_amazon_paapi
-    python manage.py migrate
-    ```
+> ⚠️ **Note:** This package is not yet available on PyPI due to pending verification of the Amazon API integration. For now, you must install from the local source.
 
----
+### Local Installation
+
+Clone the repository and install it locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/wagtail-amazon-paapi.git
+cd wagtail-amazon-paapi
+
+# Install in development mode
+pip install -e .
+```
+
+Or install directly from your local copy:
+
+```bash
+pip install -e /path/to/wagtail-amazon-paapi
+```
+
+Add it to your `INSTALLED_APPS`:
+
+```python
+INSTALLED_APPS = [
+    # ...
+    'wagtail_amazon_paapi',
+    # ...
+]
+```
 
 ## Configuration
 
-In your Django project's `settings.py`, define the credentials for your Amazon Associates account under `WAGTAIL_AMAZON_PRODUCTS`:
+Add your Amazon PA-API credentials to your Django settings:
 
 ```python
+# Amazon PA-API credentials
 WAGTAIL_AMAZON_PRODUCTS = {
-    "AMAZON_PAAPI_ACCESS_KEY": "YOUR_ACCESS_KEY",
-    "AMAZON_PAAPI_SECRET_KEY": "YOUR_SECRET_KEY",
-    "AMAZON_PAAPI_PARTNER_TAG": "YOUR_PARTNER_TAG",
-    "AMAZON_PAAPI_COUNTRY": "US",
-    # any other keys as needed
+    'AMAZON_PAAPI_ACCESS_KEY': 'YOUR_ACCESS_KEY',  # Use environment variables for security
+    'AMAZON_PAAPI_SECRET_KEY': 'YOUR_SECRET_KEY',  # Use environment variables for security
+    'AMAZON_PAAPI_PARTNER_TAG': 'your-associate-tag',  # Your tracking ID
+    'AMAZON_PAAPI_COUNTRY': 'US',  # Country code for the Amazon marketplace
 }
 ```
 
-> **Security Tip:** Use environment variables or a secure key manager whenever possible. Avoid committing secrets to version control.
+Run migrations:
 
----
+```bash
+python manage.py migrate
+```
 
-## Usage
+## Using Amazon Product Snippets
 
 ### Creating Product Snippets
 
-1. **In the Wagtail admin**, go to **Snippets** → **Amazon Product Snippets**.  
-2. **Click "Add Amazon Product Snippet"**.  
-3. **Enter the ASIN** (and optionally, a placeholder product title).  
-4. **Click "Save"**. Once saved, you should see an **"Update from Amazon API"** button (provided by the custom panel in `AmazonUpdatePanel`). Clicking it will fetch fresh data (title, price, image, etc.) from Amazon and fill in the snippet fields.
+1. In the Wagtail admin, navigate to "Snippets" and select "Amazon Products"
+2. Click "Add Amazon Product"
+3. Enter an ASIN (Amazon Standard Identification Number)
+4. Fill in product details manually or update from Amazon API
+5. Save the snippet
 
-### Using the StreamField Block
+### Adding Products to Pages
 
-In your page model, import and use the `AmazonProductSnippetBlock` to incorporate the snippet into a `StreamField`:
+1. Edit a page with a StreamField
+2. Add an "Amazon Product" block
+3. Select your product from the dropdown
+4. Configure display options
+5. Save the page
 
-```python
-from wagtail.models import Page
-from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
-from wagtail import blocks
-from wagtail_amazon_paapi.blocks import AmazonProductSnippetBlock
+## Customization Options
 
-class ExamplePage(Page):
-    body = StreamField([
-        ('heading', blocks.CharBlock()),
-        ('paragraph', blocks.RichTextBlock()),
-        ('amazon_product', AmazonProductSnippetBlock()),
-        # other blocks...
-    ], use_json_field=True)
+When adding Amazon product blocks to your pages, you can fully customize their appearance:
 
-    content_panels = Page.content_panels + [
-        FieldPanel('body'),
-    ]
-```
+### Display Styles
 
-Now, in the Wagtail admin **Pages** section, when editing/creating an `ExamplePage`, you can select **Amazon Product** from the StreamField block chooser. This lets you pick a snippet you previously created in **Snippets** → **Amazon Product Snippets**.
+Choose from three layout styles:
+- **Simple** - Clean minimal design
+- **Card** - Boxed layout with shadow
+- **Horizontal** - Side-by-side layout
 
-### Updating Product Information
+### Size Controls
 
-Over time, product details (like price) can change. To keep your snippet data up to date:
+Set exact dimensions to fit your design:
+- **Max Width** - Control the width in pixels
+- **Max Height** - Limit height with automatic overflow
 
-1. Go to **Snippets** → **Amazon Product Snippets**.  
-2. Select the product snippet you want to refresh.  
-3. Click **"Update from Amazon API"**.  
-4. Status messages (success/failure) will appear to reflect the update result.  
+### Typography Options
 
----
+Fully customize text appearance:
+- **Font Family** - Choose from web-safe fonts or Google Fonts
+- **Title Size** - Small, medium, or large options
+- **Title Weight** - Normal or bold
+- **Title Color** - Custom color for the product title
+- **Price Color** - Custom color for the price display
+- **Button Text** - Customize the call-to-action text
 
-## Customizing the Panel Template
+![Amazon Product Edit Interface](docs/images/screenshot1.png)
+*Screenshot: Configuring an Amazon product block in the Wagtail admin*
 
-By default, `amazon_update_panel.html` contains a button labeled **"Update From Amazon API"**. This button fetches the ASIN data from Amazon whenever clicked. If you wish to customize the look, text, or layout, edit the template:
+![Amazon Product Display](docs/images/screenshot2.png)
+*Screenshot: Example of Amazon product blocks with different styles*
 
-```html
-<!-- amazon_update_panel.html -->
-{% load wagtailadmin_tags i18n %}
-<div class="help-block">
-  <p>{% trans "Click the button below to fetch updated data from Amazon." %}</p>
-</div>
-<a href="{% url 'wagtail_amazon_paapi:update_amazon_product' snippet.id %}" class="button button-longrunning">
-  {% trans "Update From Amazon API" %}
-</a>
-```
+## Current Limitations
 
-When you reload the snippet edit page, the "Update from Amazon" button will have your custom text and layout.
+**Package Status:**
+> ⚠️ **Important:** This package is currently in development and not available on PyPI. The primary reason is that the automatic product updates feature has an issue with Amazon API rate limits. Manual entry of product details is fully functional and demonstrated in this package. The automatic update functionality needs further verification before public release. This will be addressed in a future update, or contributions to verify this functionality are welcome.
 
----
+## Extending
 
-## Customizing the Product Template
+You can override the default templates by creating your own versions at:
+- `templates/wagtail_amazon_paapi/blocks/amazon_product_snippet.html`
+- `templates/wagtail_amazon_paapi/admin/panels/amazon_update_panel.html`
 
-How an Amazon product snippet is displayed on your site is controlled by `amazon_product_snippet.html`. You can override this template in your own `templates` directory if you want a different design. The default usage is:
+## License
 
-```html
-{% with product=self.product %}
-    <div class="amazon-product-snippet">
-        {% if product.image_url %}
-            <img src="{{ product.image_url }}" alt="{{ product.product_title }}">
-        {% endif %}
-        <h3>{{ product.product_title }}</h3>
-        <p>Price: {{ product.price }}</p>
-        <a href="{{ product.affiliate_url }}" target="_blank" rel="noopener sponsored">Buy on Amazon</a>
-    </div>
-{% endwith %}
-```
----
-
-## Product Display Options
-
-When adding an Amazon product to a page, content editors can choose from three predefined styles:
-
-1. **Simple** - A clean, minimal design
-2. **Card** - A boxed layout with shadow effect (default)
-3. **Horizontal** - A side-by-side layout for product image and details
-
-The style can be selected directly in the page editor when adding or editing an Amazon product:
-
-1. Add an Amazon Product block to your StreamField
-2. Choose the desired product from the snippet chooser
-3. Select your preferred display style from the dropdown
-4. Preview the page to see how it looks
-
-This allows for different styling of products even on the same page.
-
-To completely customize the appearance, override the template by creating your own version at:
-`templates/wagtail_amazon_paapi/blocks/amazon_product_snippet.html`
-
----
-
-## Troubleshooting
-
-1. **Snippet Fails to Update:**  
-   Check logs for API errors. Ensure your ASIN is correct and your Amazon credentials haven’t expired.  
-
-2. **Rate Limits / Throttling:**  
-   The `AmazonApi` call in `amazon_api.py` sets a default `throttling` parameter. Make sure you’re not calling the update button too frequently.  
-
-3. **Snippets Admin URL Not Found:**  
-   Confirm you’ve included `wagtail_amazon_paapi.urls` in your main urls.py. Also check `wagtail_hooks.py` to ensure the admin URLs are registered.  
-
-4. **Empty Panel Template:**  
-   If you don’t see the update button in your snippet edit page, you likely need to add content to amazon_update_panel.html as mentioned above.  
-
-5. **Country Code / Config Issues:**  
-   The code checks settings under `WAGTAIL_AMAZON_PRODUCTS`. Ensure your `country` code matches what the `amazon_paapi` library supports (e.g., `US`, `UK`, `DE`, etc.).  
-
----
+This project is licensed under the MIT License.
 
 ## Credits and License
 

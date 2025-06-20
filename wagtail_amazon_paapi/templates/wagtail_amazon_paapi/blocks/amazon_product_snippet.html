@@ -1,6 +1,13 @@
 {% load static %}
 {% with product=self.product style_type=self.display_style %}
 
+<!-- Load Google Fonts if selected -->
+{% if "Google" in self.font_family %}
+    {% with google_font_name=self.font_family|cut:", sans-serif"|cut:", serif" %}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ google_font_name }}:wght@400;700&display=swap">
+    {% endwith %}
+{% endif %}
+
 <!-- Define base styles as CSS variables -->
 <style>
     :root {
@@ -11,79 +18,38 @@
     }
 </style>
 
-<!-- Apply styles directly to each element -->
-<div class="amazon-product" 
-     style="margin: 1.5rem 0; font-family: inherit; 
-            {% if self.max_width %}max-width: {{ self.max_width }}px;{% endif %} 
-            {% if self.max_height %}max-height: {{ self.max_height }}px; overflow: auto;{% endif %}">
+<!-- Set typography variables -->
+{% with title_size_map=self.title_size|default:'medium' title_size_px='1.1rem' title_weight=self.title_weight|default:'bold' title_color=self.title_color|default:'var(--amazon-text)' price_color=self.price_color|default:'var(--amazon-text)' button_text=self.button_text|default:'Buy on Amazon' font_family=self.font_family|default:'inherit' %}
 
-    {% if style_type == "simple" %}
-        <!-- Simple Style: Minimal and clean -->
-        <div class="amazon-product__inner" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 350px; margin: 0 auto;">
-            {% if product.image_url %}
-                <div class="amazon-product__image" style="margin-bottom: 1rem;">
-                    <img src="{{ product.image_url }}" alt="{{ product.product_title }}" style="max-width: 100%; height: auto;">
-                </div>
-            {% endif %}
-            <div class="amazon-product__content">
-                <h3 class="amazon-product__title" style="margin-top: 0; font-size: 1.1rem; line-height: 1.4;">{{ product.product_title }}</h3>
-                {% if product.price %}
-                    <p class="amazon-product__price" style="font-weight: bold; color: var(--amazon-text);">{{ product.price }}</p>
-                {% endif %}
-                <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
-                   style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
-                          padding: 0.5rem 1rem; border-radius: 3px; font-weight: 500; margin-top: 0.5rem;" 
-                   target="_blank" rel="noopener sponsored">
-                    Buy on Amazon
-                </a>
-            </div>
-        </div>
+<!-- Adjust font size based on selection -->
+{% if title_size_map == 'small' %}
+    {% with title_size_px='0.9rem' %}
+        <!-- Use the smaller font size -->
+        {% include "wagtail_amazon_paapi/blocks/amazon_product_content.html" with title_size_px=title_size_px %}
+    {% endwith %}
+{% elif title_size_map == 'large' %}
+    {% with title_size_px='1.3rem' %}
+        <!-- Use the larger font size -->
+        {% include "wagtail_amazon_paapi/blocks/amazon_product_content.html" with title_size_px=title_size_px %}
+    {% endwith %}
+{% else %}
+    <!-- Use the default medium font size -->
+    {% include "wagtail_amazon_paapi/blocks/amazon_product_content.html" %}
+{% endif %}
 
-    {% elif style_type == "card" %}
-        <!-- Card Style: Box-based design with shadow -->
-        <div class="amazon-product__inner" style="padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-                                                 background-color: white; max-width: 350px; margin: 0 auto; text-align: center;">
-            {% if product.image_url %}
-                <div class="amazon-product__image" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--amazon-border);">
-                    <img src="{{ product.image_url }}" alt="{{ product.product_title }}" style="max-width: 100%; height: auto;">
-                </div>
-            {% endif %}
-            <div class="amazon-product__content">
-                <h3 class="amazon-product__title" style="margin-top: 0; font-size: 1.1rem; line-height: 1.4;">{{ product.product_title }}</h3>
-                {% if product.price %}
-                    <p class="amazon-product__price" style="font-weight: bold; color: var(--amazon-text);">{{ product.price }}</p>
-                {% endif %}
-                <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
-                   style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
-                          padding: 0.5rem 1rem; border-radius: 3px; font-weight: 500; margin-top: 0.5rem;" 
-                   target="_blank" rel="noopener sponsored">
-                    Buy on Amazon
-                </a>
-            </div>
-        </div>
-
-    {% else %}
-        <!-- Horizontal Style: Side-by-side layout -->
-        <div class="amazon-product__inner" style="display: flex; align-items: center; padding: 1rem; 
-                                                 border: 1px solid var(--amazon-border); border-radius: 6px;">
-            {% if product.image_url %}
-                <div class="amazon-product__image" style="flex: 0 0 40%; padding-right: 1.5rem;">
-                    <img src="{{ product.image_url }}" alt="{{ product.product_title }}" style="max-width: 100%; height: auto;">
-                </div>
-            {% endif %}
-            <div class="amazon-product__content" style="flex: 1;">
-                <h3 class="amazon-product__title" style="margin-top: 0; font-size: 1.1rem; line-height: 1.4;">{{ product.product_title }}</h3>
-                {% if product.price %}
-                    <p class="amazon-product__price" style="font-weight: bold; color: var(--amazon-text);">{{ product.price }}</p>
-                {% endif %}
-                <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
-                   style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
-                          padding: 0.5rem 1rem; border-radius: 3px; font-weight: 500; margin-top: 0.5rem;" 
-                   target="_blank" rel="noopener sponsored">
-                    Buy on Amazon
-                </a>
-            </div>
-        </div>
-    {% endif %}
-</div>
+<!-- Add hover effect script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.amazon-product__button');
+        buttons.forEach(button => {
+            button.addEventListener('mouseover', function() {
+                this.style.backgroundColor = '#e88e00';
+            });
+            button.addEventListener('mouseout', function() {
+                this.style.backgroundColor = 'var(--amazon-primary)';
+            });
+        });
+    });
+</script>
+{% endwith %}
 {% endwith %}
