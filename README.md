@@ -109,10 +109,10 @@ Fully customize text appearance:
 - **Price Color** - Custom color for the price display
 - **Button Text** - Customize the call-to-action text
 
-![Amazon Product Edit Interface](docs/images/screenshot1.png)
+![Amazon Product Edit Interface](docs/images/screenshot_01.png)
 *Screenshot: Configuring an Amazon product block in the Wagtail admin*
 
-![Amazon Product Display](docs/images/screenshot2.png)
+![Amazon Product Display](docs/images/screenshot_02.png)
 *Screenshot: Example of Amazon product blocks with different styles*
 
 ## Current Limitations
