@@ -164,6 +164,27 @@ How an Amazon product snippet is displayed on your site is controlled by `amazon
     </div>
 {% endwith %}
 ```
+---
+
+## Product Display Options
+
+When adding an Amazon product to a page, content editors can choose from three predefined styles:
+
+1. **Simple** - A clean, minimal design
+2. **Card** - A boxed layout with shadow effect (default)
+3. **Horizontal** - A side-by-side layout for product image and details
+
+The style can be selected directly in the page editor when adding or editing an Amazon product:
+
+1. Add an Amazon Product block to your StreamField
+2. Choose the desired product from the snippet chooser
+3. Select your preferred display style from the dropdown
+4. Preview the page to see how it looks
+
+This allows for different styling of products even on the same page.
+
+To completely customize the appearance, override the template by creating your own version at:
+`templates/wagtail_amazon_paapi/blocks/amazon_product_snippet.html`
 
 ---
 

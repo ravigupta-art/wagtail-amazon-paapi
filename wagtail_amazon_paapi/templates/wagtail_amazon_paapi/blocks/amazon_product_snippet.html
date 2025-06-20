@@ -1,11 +1,175 @@
+{% load static %}
+{% with product=self.product style_type=self.display_style %}
 
-{% with product=self.product %}
-    <div class="amazon-product-snippet">
-        {% if product.image_url %}
-            <img src="{{ product.image_url }}" alt="{{ product.product_title }}">
-        {% endif %}
-        <h3>{{ product.product_title }}</h3>
-        <p>Price: {{ product.price }}</p>
-        <a href="{{ product.affiliate_url }}" target="_blank" rel="noopener sponsored">Buy on Amazon</a>
-    </div>
+<div class="amazon-product amazon-product--{{ style_type }}" data-asin="{{ product.asin }}">
+    {% if style_type == "simple" %}
+        <!-- Simple Style: Minimal and clean -->
+        <div class="amazon-product__inner">
+            {% if product.image_url %}
+                <div class="amazon-product__image">
+                    <img src="{{ product.image_url }}" alt="{{ product.product_title }}">
+                </div>
+            {% endif %}
+            <div class="amazon-product__content">
+                <h3 class="amazon-product__title">{{ product.product_title }}</h3>
+                {% if product.price %}
+                    <p class="amazon-product__price">{{ product.price }}</p>
+                {% endif %}
+                <a href="{{ product.affiliate_url }}" class="amazon-product__button" target="_blank" rel="noopener sponsored">
+                    Buy on Amazon
+                </a>
+            </div>
+        </div>
+
+    {% elif style_type == "card" %}
+        <!-- Card Style: Box-based design with shadow -->
+        <div class="amazon-product__inner">
+            {% if product.image_url %}
+                <div class="amazon-product__image">
+                    <img src="{{ product.image_url }}" alt="{{ product.product_title }}">
+                </div>
+            {% endif %}
+            <div class="amazon-product__content">
+                <h3 class="amazon-product__title">{{ product.product_title }}</h3>
+                {% if product.price %}
+                    <p class="amazon-product__price">{{ product.price }}</p>
+                {% endif %}
+                <a href="{{ product.affiliate_url }}" class="amazon-product__button" target="_blank" rel="noopener sponsored">
+                    Buy on Amazon
+                </a>
+            </div>
+        </div>
+
+    {% else %}
+        <!-- Horizontal Style: Side-by-side layout -->
+        <div class="amazon-product__inner">
+            {% if product.image_url %}
+                <div class="amazon-product__image">
+                    <img src="{{ product.image_url }}" alt="{{ product.product_title }}">
+                </div>
+            {% endif %}
+            <div class="amazon-product__content">
+                <h3 class="amazon-product__title">{{ product.product_title }}</h3>
+                {% if product.price %}
+                    <p class="amazon-product__price">{{ product.price }}</p>
+                {% endif %}
+                <a href="{{ product.affiliate_url }}" class="amazon-product__button" target="_blank" rel="noopener sponsored">
+                    Buy on Amazon
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+
+<style>
+    .amazon-product {
+        margin: 1.5rem 0;
+        font-family: inherit;
+        --amazon-primary: #FF9900;
+        --amazon-text: #333;
+        --amazon-light: #f8f8f8;
+        --amazon-border: #e6e6e6;
+    }
+    
+    .amazon-product__inner {
+        width: 100%;
+    }
+    
+    .amazon-product__title {
+        margin-top: 0;
+        font-size: 1.1rem;
+        line-height: 1.4;
+    }
+    
+    .amazon-product__price {
+        font-weight: bold;
+        color: var(--amazon-text);
+    }
+    
+    .amazon-product__image img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .amazon-product__button {
+        display: inline-block;
+        background-color: var(--amazon-primary);
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 3px;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        transition: background-color 0.2s;
+    }
+    
+    .amazon-product__button:hover {
+        background-color: #e88e00;
+        text-decoration: none;
+        color: white;
+    }
+    
+    /* Simple Style */
+    .amazon-product--simple .amazon-product__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .amazon-product--simple .amazon-product__image {
+        margin-bottom: 1rem;
+    }
+    
+    /* Card Style */
+    .amazon-product--card .amazon-product__inner {
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        background-color: white;
+        max-width: 350px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .amazon-product--card .amazon-product__image {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--amazon-border);
+    }
+    
+    /* Horizontal Style */
+    .amazon-product--horizontal .amazon-product__inner {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid var(--amazon-border);
+        border-radius: 6px;
+    }
+    
+    .amazon-product--horizontal .amazon-product__image {
+        flex: 0 0 40%;
+        padding-right: 1.5rem;
+    }
+    
+    .amazon-product--horizontal .amazon-product__content {
+        flex: 1;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+        .amazon-product--horizontal .amazon-product__inner {
+            flex-direction: column;
+        }
+        
+        .amazon-product--horizontal .amazon-product__image {
+            padding-right: 0;
+            padding-bottom: 1rem;
+            width: 100%;
+        }
+    }
+</style>
 {% endwith %}
