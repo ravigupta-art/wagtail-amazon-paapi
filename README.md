@@ -58,29 +58,106 @@ WAGTAIL_AMAZON_PRODUCTS = {
 }
 ```
 
-Run migrations:
+Set DEFAULT_AUTO_FIELD to 'django.db.models.BigAutoField' in Django settings:
+
+```python
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+```
+
+In your page model, import and use the AmazonProductSnippetBlock to incorporate the snippet into a StreamField:
+
+```python
+from wagtail.models import Page
+from wagtail.fields import StreamField
+from wagtail.admin.panels import FieldPanel
+from wagtail import blocks
+from wagtail_amazon_paapi.blocks import AmazonProductSnippetBlock
+
+class ExamplePage(Page):
+    body = StreamField([
+        ('heading', blocks.CharBlock()),
+        ('paragraph', blocks.RichTextBlock()),
+        ('amazon_product', AmazonProductSnippetBlock()),
+        # other blocks...
+    ], use_json_field=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body'),
+    ]
+```
+
+
+Run makemigrations:
+
+```bash
+python manage.py makemigrations
+```
+
+Run migrate:
 
 ```bash
 python manage.py migrate
 ```
 
-## Using Amazon Product Snippets
+## Usage
 
 ### Creating Product Snippets
 
-1. In the Wagtail admin, navigate to "Snippets" and select "Amazon Products"
-2. Click "Add Amazon Product"
-3. Enter an ASIN (Amazon Standard Identification Number)
-4. Fill in product details manually or update from Amazon API
-5. Save the snippet
+1. **In the Wagtail admin**, go to **Snippets** → **Amazon Product Snippets**.  
+2. **Click "Add Amazon Product Snippet"**.  
+3. **Enter the ASIN**
+   - Add other details manually.
+   - You can get affliate url using SiteSrtrip feature in you affliate account.
+   - product image can be retrieved by getting a image URL from product page.
+   - Right now adding this information manually is important. This part will keep working even when you loose PA-API access. Refer this doc:https://webservices.amazon.com/paapi5/documentation/troubleshooting/api-rates.html
+4. **Click "Save"**. Once saved, you should see an **"Update from Amazon API"** button (provided by the custom panel in `AmazonUpdatePanel`). Clicking it will fetch fresh data (title, price, image, etc.) from Amazon and fill in the snippet fields.
 
-### Adding Products to Pages
+### Using the StreamField Block
 
-1. Edit a page with a StreamField
-2. Add an "Amazon Product" block
-3. Select your product from the dropdown
-4. Configure display options
-5. Save the page
+In your page model, import and use the `AmazonProductSnippetBlock` to incorporate the snippet into a `StreamField`:
+
+```python
+from wagtail.models import Page
+from wagtail.fields import StreamField
+from wagtail.admin.panels import FieldPanel
+from wagtail import blocks
+from wagtail_amazon_paapi.blocks import AmazonProductSnippetBlock
+
+class ExamplePage(Page):
+    body = StreamField([
+        ('heading', blocks.CharBlock()),
+        ('paragraph', blocks.RichTextBlock()),
+        ('amazon_product', AmazonProductSnippetBlock()),
+        # other blocks...
+    ], use_json_field=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body'),
+    ]
+```
+
+Now, in the Wagtail admin **Pages** section, when editing/creating an `ExamplePage`, you can select **Amazon Product** from the StreamField block chooser. This lets you pick a snippet you previously created in **Snippets** → **Amazon Product Snippets**.
+
+### Updating Product Information
+
+Over time, product details (like price) can change. To keep your snippet data up to date:
+
+1. Go to **Snippets** → **Amazon Product Snippets**.  
+2. Select the product snippet you want to refresh.  
+3. Click **"Update from Amazon API"**.  
+4. Status messages (success/failure) will appear to reflect the update result.  
+
+## Customizing the Panel Template
+
+By default, `amazon_update_panel.html` contains a button labeled **"Update From Amazon API"**. This button fetches the ASIN data from Amazon whenever clicked. If you wish to customize the look, text, or layout, edit the template
+
+---
+
+## Customizing the Product Template
+
+How an Amazon product snippet is displayed on your site is controlled by `amazon_product_snippet.html`. You can override this template in your own `templates` directory if you want a different design. 
+
+---
 
 ## Customization Options
 
