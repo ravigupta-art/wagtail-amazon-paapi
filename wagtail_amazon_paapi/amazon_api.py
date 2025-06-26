@@ -24,19 +24,19 @@ def get_product_data_from_api(asin: str):
             return None
 
         amazon = AmazonApi(
-            key=access_key,
-            secret=secret_key,
-            tag=partner_tag,
+            access_key=access_key,
+            secret_key=secret_key,
+            partner_tag=partner_tag,
             country=country,
-            throttling=10, # Adjust throttling as needed
+            throttling=10,  # Adjust throttling as needed
         )
         
-        products = amazon.get_items(item_ids=[asin])
-        
-        if not products or not products.items:
+        items = amazon.get_items([asin])
+
+        if not items:
             return None
-            
-        product = products.items[0]
+
+        product = items[0]
         
         return {
             "product_title": product.item_info.title.display_value,
