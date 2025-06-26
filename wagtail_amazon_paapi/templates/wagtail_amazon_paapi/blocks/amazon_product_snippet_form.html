@@ -1,0 +1,26 @@
+{% load wagtailadmin_tags %}
+<div class="{{ classname }}">
+    <fieldset>
+        <legend>Layout</legend>
+        {% include "wagtailadmin/shared/field.html" with field=form.display_style %}
+        {% include "wagtailadmin/shared/field.html" with field=form.max_width %}
+        {% include "wagtailadmin/shared/field.html" with field=form.max_height %}
+        {% include "wagtailadmin/shared/field.html" with field=form.block_alignment %}
+        {% include "wagtailadmin/shared/field.html" with field=form.text_alignment %}
+        {% include "wagtailadmin/shared/field.html" with field=form.background_color %}
+    </fieldset>
+    <fieldset>
+        <legend>Typography</legend>
+        {% include "wagtailadmin/shared/field.html" with field=form.font_family %}
+        {% include "wagtailadmin/shared/field.html" with field=form.title_size %}
+        {% include "wagtailadmin/shared/field.html" with field=form.title_weight %}
+        {% include "wagtailadmin/shared/field.html" with field=form.title_color %}
+    </fieldset>
+    <fieldset>
+        <legend>Price</legend>
+        {% include "wagtailadmin/shared/field.html" with field=form.price_size %}
+        {% include "wagtailadmin/shared/field.html" with field=form.price_weight %}
+        {% include "wagtailadmin/shared/field.html" with field=form.price_color %}
+        {% include "wagtailadmin/shared/field.html" with field=form.button_text %}
+    </fieldset>
+</div>

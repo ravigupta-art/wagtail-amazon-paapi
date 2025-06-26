@@ -1,6 +1,5 @@
 from wagtail.blocks import StructBlock, ChoiceBlock, IntegerBlock, CharBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
-from wagtail.admin.panels import FieldPanel, FieldRowPanel, MultiFieldPanel
 
 class AmazonProductSnippetBlock(StructBlock):
     """A block for displaying an Amazon Product Snippet with configurable styling."""
@@ -144,51 +143,13 @@ class AmazonProductSnippetBlock(StructBlock):
         default='Buy on Amazon'
     )
 
+    form_template = "wagtail_amazon_paapi/blocks/amazon_product_snippet_form.html"
+
     class Meta:
         template = "wagtail_amazon_paapi/blocks/amazon_product_snippet.html"
         icon = "snippet"
         label = "Amazon Product"
         form_classname = "amazon-product-block-form"
-        panels = [
-            FieldPanel("product"),
-            MultiFieldPanel(
-                [
-                    FieldPanel("display_style"),
-                    FieldRowPanel([
-                        FieldPanel("max_width"),
-                        FieldPanel("max_height"),
-                    ]),
-                    FieldRowPanel([
-                        FieldPanel("block_alignment"),
-                        FieldPanel("text_alignment"),
-                    ]),
-                    FieldPanel("background_color"),
-                ],
-                heading="Layout",
-            ),
-            MultiFieldPanel(
-                [
-                    FieldPanel("font_family"),
-                    FieldRowPanel([
-                        FieldPanel("title_size"),
-                        FieldPanel("title_weight"),
-                    ]),
-                    FieldPanel("title_color"),
-                ],
-                heading="Typography",
-            ),
-            MultiFieldPanel(
-                [
-                    FieldRowPanel([
-                        FieldPanel("price_size"),
-                        FieldPanel("price_weight"),
-                    ]),
-                    FieldPanel("price_color"),
-                    FieldPanel("button_text"),
-                ],
-                heading="Price",
-            ),
-        ]
 
     class Media:
         css = {
