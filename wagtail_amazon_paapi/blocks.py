@@ -88,7 +88,7 @@ class AmazonProductSnippetBlock(StructBlock):
         max_length=20
     )
 
-    alignment = ChoiceBlock(
+    block_alignment = ChoiceBlock(
         choices=[
             ('left', 'Left'),
             ('center', 'Center'),
@@ -96,7 +96,18 @@ class AmazonProductSnippetBlock(StructBlock):
         ],
         default='left',
         required=False,
-        help_text='Text alignment for the block content'
+        help_text='Alignment of the entire block on the page'
+    )
+
+    text_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='left',
+        required=False,
+        help_text='Text alignment for the content inside the block'
     )
 
     background_color = CharBlock(
