@@ -1,26 +1,27 @@
 {% load wagtailadmin_tags %}
 <div class="{{ classname }}">
+    {% include "wagtailadmin/shared/field.html" with field=children.product %}
     <fieldset>
         <legend>Layout</legend>
-        {% include "wagtailadmin/shared/field.html" with field=form.display_style %}
-        {% include "wagtailadmin/shared/field.html" with field=form.max_width %}
-        {% include "wagtailadmin/shared/field.html" with field=form.max_height %}
-        {% include "wagtailadmin/shared/field.html" with field=form.block_alignment %}
-        {% include "wagtailadmin/shared/field.html" with field=form.text_alignment %}
-        {% include "wagtailadmin/shared/field.html" with field=form.background_color %}
+        {% include "wagtailadmin/shared/field.html" with field=children.display_style %}
+        {% include "wagtailadmin/shared/field.html" with field=children.max_width %}
+        {% include "wagtailadmin/shared/field.html" with field=children.max_height %}
+        {% include "wagtailadmin/shared/field.html" with field=children.block_alignment %}
+        {% include "wagtailadmin/shared/field.html" with field=children.text_alignment %}
+        {% include "wagtailadmin/shared/field.html" with field=children.background_color %}
     </fieldset>
     <fieldset>
         <legend>Typography</legend>
-        {% include "wagtailadmin/shared/field.html" with field=form.font_family %}
-        {% include "wagtailadmin/shared/field.html" with field=form.title_size %}
-        {% include "wagtailadmin/shared/field.html" with field=form.title_weight %}
-        {% include "wagtailadmin/shared/field.html" with field=form.title_color %}
+        {% include "wagtailadmin/shared/field.html" with field=children.font_family %}
+        {% include "wagtailadmin/shared/field.html" with field=children.title_size %}
+        {% include "wagtailadmin/shared/field.html" with field=children.title_weight %}
+        {% include "wagtailadmin/shared/field.html" with field=children.title_color %}
     </fieldset>
     <fieldset>
         <legend>Price</legend>
-        {% include "wagtailadmin/shared/field.html" with field=form.price_size %}
-        {% include "wagtailadmin/shared/field.html" with field=form.price_weight %}
-        {% include "wagtailadmin/shared/field.html" with field=form.price_color %}
-        {% include "wagtailadmin/shared/field.html" with field=form.button_text %}
+        {% include "wagtailadmin/shared/field.html" with field=children.price_size %}
+        {% include "wagtailadmin/shared/field.html" with field=children.price_weight %}
+        {% include "wagtailadmin/shared/field.html" with field=children.price_color %}
+        {% include "wagtailadmin/shared/field.html" with field=children.button_text %}
     </fieldset>
 </div>
