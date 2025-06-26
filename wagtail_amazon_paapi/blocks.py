@@ -147,7 +147,7 @@ class AmazonProductSnippetBlock(StructBlock):
         template = "wagtail_amazon_paapi/blocks/amazon_product_snippet.html"
         icon = "snippet"
         label = "Amazon Product"
-        form_classname = "amazon-product-block-form"
+        form_classname = "amazon-product-block-form struct-block"
         form_template = "wagtail_amazon_paapi/blocks/amazon_product_snippet_form.html"
 
     class Media:
