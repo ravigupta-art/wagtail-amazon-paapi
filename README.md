@@ -21,7 +21,7 @@ Clone the repository and install it locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/wagtail-amazon-paapi.git
+git clone https://github.com/ravigupta-art/wagtail-amazon-paapi.git
 cd wagtail-amazon-paapi
 
 # Install in development mode
@@ -32,6 +32,12 @@ Or install directly from your local copy:
 
 ```bash
 pip install -e /path/to/wagtail-amazon-paapi
+```
+
+Or install directly from GitHub:
+
+```bash
+pip install -e git+https://github.com/ravigupta-art/wagtail-amazon-paapi#egg=wagtail_amazon_paapi
 ```
 
 Add it to your `INSTALLED_APPS`:
@@ -107,9 +113,9 @@ python manage.py migrate
 2. **Click "Add Amazon Product Snippet"**.  
 3. **Enter the ASIN**
    - Add other details manually.
-   - You can get affliate url using SiteSrtrip feature in you affliate account.
-   - product image can be retrieved by getting a image URL from product page.
-   - Right now adding this information manually is important. This part will keep working even when you loose PA-API access. Refer this doc:https://webservices.amazon.com/paapi5/documentation/troubleshooting/api-rates.html
+   - You can get the affiliate URL using the SiteStripe feature in your affiliate account.
+   - Product images can be retrieved by copying an image URL from the product page.
+   - Right now adding this information manually is important. This part will keep working even when you lose PA‑API access. Refer to this doc: <https://webservices.amazon.com/paapi5/documentation/troubleshooting/api-rates.html>
 4. **Click "Save"**. Once saved, you should see an **"Update from Amazon API"** button (provided by the custom panel in `AmazonUpdatePanel`). Clicking it will fetch fresh data (title, price, image, etc.) from Amazon and fill in the snippet fields.
 
 ### Using the StreamField Block
@@ -159,7 +165,7 @@ How an Amazon product snippet is displayed on your site is controlled by `amazon
 
 ## Block Form Layout
 
-`AmazonProductSnippetBlock` groups its settings into **Layout**, **Typography**, and **Price** sections. The admin form includes the CSS class `amazon-product-block-form` and loads `amazon_product_block.css` for basic styling. Override this file if you need further customization.
+`AmazonProductSnippetBlock` groups its settings into **Layout**, **Typography**, **Price**, and **Button** sections. The admin form includes the CSS class `amazon-product-block-form` and loads `amazon_product_block_admin.css` for basic styling in the Wagtail admin. Override this file if you need further customization.
 
 ---
 
@@ -195,6 +201,16 @@ Fully customize text appearance:
 - **Title Color** - Custom color for the product title
 - **Price Color** - Custom color for the price display
 - **Button Text** - Customize the call-to-action text
+
+### Button Styling
+
+- **Button Size** - Adjust the padding of the button
+- **Button Text Size** - Control the font size of the button label
+- **Button Text Weight** - Choose how bold the button text should appear
+- **Button Text Color** - Set the color of the button label
+- **Button Style** - Rounded rectangle, pill, or square
+- **Button Corner Radius** - Fine‑tune rounding when using the rounded style
+- **Button Background Color** - Customize the button background
 
 ![Amazon Product Edit Interface](docs/images/screenshot_01.png)
 *Screenshot: Configuring an Amazon product block in the Wagtail admin*
