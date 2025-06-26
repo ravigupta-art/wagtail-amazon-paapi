@@ -87,6 +87,55 @@ class AmazonProductSnippetBlock(StructBlock):
         help_text='Price text color (e.g., #009900 or darkgreen)',
         max_length=20
     )
+
+    alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='left',
+        required=False,
+        help_text='Alignment of the entire product card'
+    )
+
+    text_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='left',
+        required=False,
+        help_text='Text alignment within the card'
+    )
+
+    background_color = CharBlock(
+        required=False,
+        help_text='Background color for the block (e.g., #ffffff)',
+        max_length=20
+    )
+
+    price_size = ChoiceBlock(
+        choices=[
+            ('small', 'Small'),
+            ('medium', 'Medium (Default)'),
+            ('large', 'Large'),
+        ],
+        default='medium',
+        required=False,
+        help_text='Price font size'
+    )
+
+    price_weight = ChoiceBlock(
+        choices=[
+            ('normal', 'Normal'),
+            ('bold', 'Bold (Default)'),
+        ],
+        default='bold',
+        required=False,
+        help_text='Price font weight'
+    )
     
     button_text = CharBlock(
         required=False,

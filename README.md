@@ -185,6 +185,11 @@ Fully customize text appearance:
 - **Title Color** - Custom color for the product title
 - **Price Color** - Custom color for the price display
 - **Button Text** - Customize the call-to-action text
+- **Block Alignment** - Left, center or right alignment of the entire card
+- **Text Alignment** - Align text left, center or right within the card
+- **Background Color** - Custom background color for the ad card
+- **Price Size** - Control the price font size
+- **Price Weight** - Normal or bold weight for the price text
 
 ![Amazon Product Edit Interface](docs/images/screenshot_01.png)
 *Screenshot: Configuring an Amazon product block in the Wagtail admin*

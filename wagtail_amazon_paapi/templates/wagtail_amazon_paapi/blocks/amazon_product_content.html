@@ -1,12 +1,15 @@
 <!-- Apply styles directly to each element -->
-<div class="amazon-product" 
-     style="margin: 1.5rem 0; font-family: {{ font_family }}; 
-            {% if self.max_width %}max-width: {{ self.max_width }}px;{% endif %} 
+<div class="amazon-product"
+     style="margin: 1.5rem 0; font-family: {{ font_family }}; display: flex;
+            justify-content: {% if block_alignment == 'center' %}center{% elif block_alignment == 'right' %}flex-end{% else %}flex-start{% endif %};
             {% if self.max_height %}max-height: {{ self.max_height }}px; overflow: auto;{% endif %}">
 
     {% if style_type == "simple" %}
         <!-- Simple Style: Minimal and clean -->
-        <div class="amazon-product__inner" style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 350px; margin: 0 auto;">
+        <div class="amazon-product__inner"
+             style="display: flex; flex-direction: column;
+                    align-items: {% if text_alignment == 'center' %}center{% elif text_alignment == 'right' %}flex-end{% else %}flex-start{% endif %};
+                    text-align: {{ text_alignment }}; max-width: {% if self.max_width %}{{ self.max_width }}px{% else %}350px{% endif %}; background-color: {{ background_color }};">
             {% if product.image_url %}
                 <div class="amazon-product__image" style="margin-bottom: 1rem;">
                     <img src="{{ product.image_url }}" alt="{{ product.product_title }}" style="max-width: 100%; height: auto;">
@@ -17,7 +20,7 @@
                     {{ product.product_title }}
                 </h3>
                 {% if product.price %}
-                    <p class="amazon-product__price" style="font-weight: bold; color: {{ price_color }};">{{ product.price }}</p>
+                    <p class="amazon-product__price" style="font-weight: {{ price_weight }}; color: {{ price_color }}; font-size: {% if self.price_size == 'small' %}0.9rem{% elif self.price_size == 'large' %}1.2rem{% else %}1rem{% endif %};">{{ product.price }}</p>
                 {% endif %}
                 <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
                    style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
@@ -30,8 +33,10 @@
 
     {% elif style_type == "card" %}
         <!-- Card Style: Box-based design with shadow -->
-        <div class="amazon-product__inner" style="padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-                                                 background-color: white; max-width: 350px; margin: 0 auto; text-align: center;">
+        <div class="amazon-product__inner"
+             style="padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    background-color: {% if background_color %}{{ background_color }}{% else %}white{% endif %};
+                    max-width: {% if self.max_width %}{{ self.max_width }}px{% else %}350px{% endif %}; text-align: {{ text_alignment }};">
             {% if product.image_url %}
                 <div class="amazon-product__image" style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--amazon-border);">
                     <img src="{{ product.image_url }}" alt="{{ product.product_title }}" style="max-width: 100%; height: auto;">
@@ -42,7 +47,7 @@
                     {{ product.product_title }}
                 </h3>
                 {% if product.price %}
-                    <p class="amazon-product__price" style="font-weight: bold; color: {{ price_color }};">{{ product.price }}</p>
+                    <p class="amazon-product__price" style="font-weight: {{ price_weight }}; color: {{ price_color }}; font-size: {% if self.price_size == 'small' %}0.9rem{% elif self.price_size == 'large' %}1.2rem{% else %}1rem{% endif %};">{{ product.price }}</p>
                 {% endif %}
                 <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
                    style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
@@ -55,19 +60,22 @@
 
     {% else %}
         <!-- Horizontal Style: Side-by-side layout -->
-        <div class="amazon-product__inner" style="display: flex; align-items: center; padding: 1rem; 
-                                                 border: 1px solid var(--amazon-border); border-radius: 6px;">
+        <div class="amazon-product__inner"
+             style="display: flex; align-items: center; padding: 1rem;
+                    border: 1px solid var(--amazon-border); border-radius: 6px;
+                    background-color: {{ background_color }};
+                    {% if self.max_width %}max-width: {{ self.max_width }}px;{% endif %}">
             {% if product.image_url %}
                 <div class="amazon-product__image" style="flex: 0 0 40%; padding-right: 1.5rem;">
                     <img src="{{ product.image_url }}" alt="{{ product.product_title }}" style="max-width: 100%; height: auto;">
                 </div>
             {% endif %}
-            <div class="amazon-product__content" style="flex: 1;">
+            <div class="amazon-product__content" style="flex: 1; text-align: {{ text_alignment }};">
                 <h3 class="amazon-product__title" style="margin-top: 0; font-size: {{ title_size_px }}; line-height: 1.4; font-weight: {{ title_weight }}; color: {{ title_color }};">
                     {{ product.product_title }}
                 </h3>
                 {% if product.price %}
-                    <p class="amazon-product__price" style="font-weight: bold; color: {{ price_color }};">{{ product.price }}</p>
+                    <p class="amazon-product__price" style="font-weight: {{ price_weight }}; color: {{ price_color }}; font-size: {% if self.price_size == 'small' %}0.9rem{% elif self.price_size == 'large' %}1.2rem{% else %}1rem{% endif %};">{{ product.price }}</p>
                 {% endif %}
                 <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
                    style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
