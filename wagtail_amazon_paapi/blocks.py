@@ -31,6 +31,34 @@ class AmazonProductSnippetBlock(StructBlock):
         max_value=1200
     )
     
+    block_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='left',
+        required=False,
+        help_text='Alignment of the entire block on the page'
+    )
+
+    text_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='left',
+        required=False,
+        help_text='Text alignment for the content inside the block'
+    )
+
+    background_color = CharBlock(
+        required=False,
+        help_text='Background color for the block (e.g., #ffffff)',
+        max_length=20
+    )
+
     # Font options
     font_family = ChoiceBlock(
         choices=[
@@ -82,40 +110,6 @@ class AmazonProductSnippetBlock(StructBlock):
         max_length=20
     )
     
-    price_color = CharBlock(
-        required=False,
-        help_text='Price text color (e.g., #009900 or darkgreen)',
-        max_length=20
-    )
-
-    block_alignment = ChoiceBlock(
-        choices=[
-            ('left', 'Left'),
-            ('center', 'Center'),
-            ('right', 'Right'),
-        ],
-        default='left',
-        required=False,
-        help_text='Alignment of the entire block on the page'
-    )
-
-    text_alignment = ChoiceBlock(
-        choices=[
-            ('left', 'Left'),
-            ('center', 'Center'),
-            ('right', 'Right'),
-        ],
-        default='left',
-        required=False,
-        help_text='Text alignment for the content inside the block'
-    )
-
-    background_color = CharBlock(
-        required=False,
-        help_text='Background color for the block (e.g., #ffffff)',
-        max_length=20
-    )
-
     price_size = ChoiceBlock(
         choices=[
             ('small', 'Small'),
@@ -136,6 +130,15 @@ class AmazonProductSnippetBlock(StructBlock):
         required=False,
         help_text='Price font weight'
     )
+    
+    price_color = CharBlock(
+        required=False,
+        help_text='Price text color (e.g., #009900 or darkgreen)',
+        max_length=20
+    )
+
+
+
     button_text = CharBlock(
         required=False,
         help_text='Custom button text (default: "Buy on Amazon")',
