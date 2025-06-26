@@ -143,6 +143,53 @@ class AmazonProductSnippetBlock(StructBlock):
         default='Buy on Amazon'
     )
 
+    button_size = ChoiceBlock(
+        choices=[
+            ('small', 'Small'),
+            ('medium', 'Medium (Default)'),
+            ('large', 'Large'),
+        ],
+        default='medium',
+        required=False,
+        help_text='Button padding size'
+    )
+
+    button_text_size = ChoiceBlock(
+        choices=[
+            ('small', 'Small'),
+            ('medium', 'Medium (Default)'),
+            ('large', 'Large'),
+        ],
+        default='medium',
+        required=False,
+        help_text='Font size for button text'
+    )
+
+    button_text_color = CharBlock(
+        required=False,
+        help_text='Button text color',
+        max_length=20
+    )
+
+    button_style = ChoiceBlock(
+        choices=[
+            ('rounded', 'Rounded Rectangle'),
+            ('pill', 'Pill'),
+            ('rectangle', 'Rectangle'),
+        ],
+        default='rounded',
+        required=False,
+        help_text='Button shape style'
+    )
+
+    button_corner_radius = IntegerBlock(
+        required=False,
+        help_text='Corner radius when using rounded style',
+        min_value=0,
+        max_value=50,
+        default=4
+    )
+
     class Meta:
         template = "wagtail_amazon_paapi/blocks/amazon_product_snippet.html"
         icon = "snippet"
