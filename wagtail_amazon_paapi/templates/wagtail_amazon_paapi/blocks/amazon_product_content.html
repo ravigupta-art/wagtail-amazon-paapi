@@ -2,6 +2,7 @@
 <div class="amazon-product"
      style="margin: 1.5rem 0; font-family: {{ font_family }}; display: flex;
             justify-content: {% if block_alignment == 'center' %}center{% elif block_alignment == 'right' %}flex-end{% else %}flex-start{% endif %};
+            {% if block_alignment == 'center' %}margin-left:auto;margin-right:auto;{% elif block_alignment == 'right' %}margin-left:auto;margin-right:0;{% else %}margin-right:auto;{% endif %}
             {% if self.max_width %}max-width: {{ self.max_width }}px;{% endif %}
             {% if self.max_height %}max-height: {{ self.max_height }}px; overflow: auto;{% endif %}">
 
@@ -23,9 +24,12 @@
                 {% if product.price %}
                     <p class="amazon-product__price" style="font-weight: {{ price_weight }}; color: {{ price_color }}; font-size: {% if self.price_size == 'small' %}0.9rem{% elif self.price_size == 'large' %}1.2rem{% else %}1rem{% endif %};">{{ product.price }}</p>
                 {% endif %}
-                <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
-                   style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
-                          padding: 0.5rem 1rem; border-radius: 3px; font-weight: 500; margin-top: 0.5rem;" 
+                <a href="{{ product.affiliate_url }}" class="amazon-product__button"
+                   style="display: inline-block; background-color: var(--amazon-primary); color: {{ button_text_color }}; text-decoration: none;
+                          padding: {% if button_size == 'small' %}0.25rem 0.5rem{% elif button_size == 'large' %}0.75rem 1.5rem{% else %}0.5rem 1rem{% endif %};
+                          border-radius: {% if button_style == 'pill' %}9999px{% elif button_style == 'rounded' %}{{ button_corner_radius }}px{% else %}0{% endif %};
+                          font-weight: 500; margin-top: 0.5rem;
+                          font-size: {% if button_text_size == 'small' %}0.8rem{% elif button_text_size == 'large' %}1.1rem{% else %}1rem{% endif %};"
                    target="_blank" rel="noopener sponsored">
                     {{ button_text }}
                 </a>
@@ -48,9 +52,12 @@
                 </h3>
                 {% if product.price %}
                     <p class="amazon-product__price" style="font-weight: {{ price_weight }}; color: {{ price_color }}; font-size: {% if self.price_size == 'small' %}0.9rem{% elif self.price_size == 'large' %}1.2rem{% else %}1rem{% endif %};">{{ product.price }}</p>                {% endif %}
-                <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
-                   style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
-                          padding: 0.5rem 1rem; border-radius: 3px; font-weight: 500; margin-top: 0.5rem;" 
+                <a href="{{ product.affiliate_url }}" class="amazon-product__button"
+                   style="display: inline-block; background-color: var(--amazon-primary); color: {{ button_text_color }}; text-decoration: none;
+                          padding: {% if button_size == 'small' %}0.25rem 0.5rem{% elif button_size == 'large' %}0.75rem 1.5rem{% else %}0.5rem 1rem{% endif %};
+                          border-radius: {% if button_style == 'pill' %}9999px{% elif button_style == 'rounded' %}{{ button_corner_radius }}px{% else %}0{% endif %};
+                          font-weight: 500; margin-top: 0.5rem;
+                          font-size: {% if button_text_size == 'small' %}0.8rem{% elif button_text_size == 'large' %}1.1rem{% else %}1rem{% endif %};"
                    target="_blank" rel="noopener sponsored">
                     {{ button_text }}
                 </a>
@@ -74,9 +81,12 @@
                 </h3>
                 {% if product.price %}
                     <p class="amazon-product__price" style="font-weight: {{ price_weight }}; color: {{ price_color }}; font-size: {% if self.price_size == 'small' %}0.9rem{% elif self.price_size == 'large' %}1.2rem{% else %}1rem{% endif %};">{{ product.price }}</p>                {% endif %}
-                <a href="{{ product.affiliate_url }}" class="amazon-product__button" 
-                   style="display: inline-block; background-color: var(--amazon-primary); color: white; text-decoration: none; 
-                          padding: 0.5rem 1rem; border-radius: 3px; font-weight: 500; margin-top: 0.5rem;" 
+                <a href="{{ product.affiliate_url }}" class="amazon-product__button"
+                   style="display: inline-block; background-color: var(--amazon-primary); color: {{ button_text_color }}; text-decoration: none;
+                          padding: {% if button_size == 'small' %}0.25rem 0.5rem{% elif button_size == 'large' %}0.75rem 1.5rem{% else %}0.5rem 1rem{% endif %};
+                          border-radius: {% if button_style == 'pill' %}9999px{% elif button_style == 'rounded' %}{{ button_corner_radius }}px{% else %}0{% endif %};
+                          font-weight: 500; margin-top: 0.5rem;
+                          font-size: {% if button_text_size == 'small' %}0.8rem{% elif button_text_size == 'large' %}1.1rem{% else %}1rem{% endif %};"
                    target="_blank" rel="noopener sponsored">
                     {{ button_text }}
                 </a>
