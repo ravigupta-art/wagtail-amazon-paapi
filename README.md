@@ -155,7 +155,11 @@ By default, `amazon_update_panel.html` contains a button labeled **"Update From 
 
 ## Customizing the Product Template
 
-How an Amazon product snippet is displayed on your site is controlled by `amazon_product_snippet.html`. You can override this template in your own `templates` directory if you want a different design. 
+How an Amazon product snippet is displayed on your site is controlled by `amazon_product_snippet.html`. You can override this template in your own `templates` directory if you want a different design.
+
+## Block Form Layout
+
+`AmazonProductSnippetBlock` groups its settings into **Layout**, **Typography**, and **Price** sections. The admin form includes the CSS class `amazon-product-block-form` and loads `amazon_product_block.css` for basic styling. Override this file if you need further customization.
 
 ---
 
