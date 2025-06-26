@@ -148,3 +148,36 @@ class AmazonProductSnippetBlock(StructBlock):
         icon = "snippet"
         label = "Amazon Product"
         form_classname = "amazon-product-block-form"
+        fieldsets = (
+            ("Layout", {
+                "fields": (
+                    "display_style",
+                    "max_width",
+                    "max_height",
+                    "block_alignment",
+                    "text_alignment",
+                    "background_color",
+                )
+            }),
+            ("Typography", {
+                "fields": (
+                    "font_family",
+                    "title_size",
+                    "title_weight",
+                    "title_color",
+                )
+            }),
+            ("Price", {
+                "fields": (
+                    "price_size",
+                    "price_weight",
+                    "price_color",
+                    "button_text",
+                )
+            }),
+        )
+
+    class Media:
+        css = {
+            "all": ["wagtail_amazon_paapi/css/amazon_product_block.css"]
+        }
