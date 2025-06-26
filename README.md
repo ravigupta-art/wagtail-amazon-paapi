@@ -176,6 +176,12 @@ Set exact dimensions to fit your design:
 - **Max Width** - Control the width in pixels
 - **Max Height** - Limit height with automatic overflow
 
+### Alignment Options
+
+Adjust how the product card is positioned and how its text is aligned:
+- **Block Alignment** - Left, center, or right placement of the entire card
+- **Text Alignment** - Left, center, or right alignment of the content
+
 ### Typography Options
 
 Fully customize text appearance:

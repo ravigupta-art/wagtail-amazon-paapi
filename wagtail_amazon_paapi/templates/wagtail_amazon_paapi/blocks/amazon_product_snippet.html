@@ -19,7 +19,7 @@
 </style>
 
 <!-- Set typography variables -->
-{% with title_size_map=self.title_size|default:'medium' title_size_px='1.1rem' title_weight=self.title_weight|default:'bold' title_color=self.title_color|default:'var(--amazon-text)' price_color=self.price_color|default:'var(--amazon-text)' button_text=self.button_text|default:'Buy on Amazon' font_family=self.font_family|default:'inherit' alignment=self.alignment|default:'left' background_color=self.background_color|default:'transparent' price_weight=self.price_weight|default:'bold' %}
+{% with title_size_map=self.title_size|default:'medium' title_size_px='1.1rem' title_weight=self.title_weight|default:'bold' title_color=self.title_color|default:'var(--amazon-text)' price_color=self.price_color|default:'var(--amazon-text)' button_text=self.button_text|default:'Buy on Amazon' font_family=self.font_family|default:'inherit' block_alignment=self.block_alignment|default:'left' text_alignment=self.text_alignment|default:'left' background_color=self.background_color|default:'transparent' price_weight=self.price_weight|default:'bold' %}
 <!-- Adjust font size based on selection -->
 {% if title_size_map == 'small' %}
     {% with title_size_px='0.9rem' %}
