@@ -1,0 +1,64 @@
+/* Fieldset styling for clear grouping */
+.amazon-block-fieldset {
+    border: 1.5px solid #81848a;
+    border-radius: 10px;
+    margin-bottom: 28px;
+    padding: 22px 24px 14px 24px;
+    background: #2f2b2b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+}
+.amazon-block-fieldset legend {
+    font-weight: 600;
+    color: #adafb4;
+    margin-bottom: 12px;
+    font-size: 1.18em;
+    letter-spacing: 0.5px;
+    padding: 0 8px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+/* Field row for horizontal grouping */
+.field-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+.field-row .w-field {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Individual field styling */
+.w-field {
+    margin-bottom: 18px;
+}
+.w-field__label {
+    font-weight: 500;
+    color: #cdd1d8;
+    margin-bottom: 4px;
+    display: block;
+}
+.w-required-mark {
+    color: #e53e3e;
+    margin-left: 2px;
+    font-size: 1em;
+}
+
+/* Help text styling */
+.help {
+    color: #888a8d;
+    background: inherit;
+    border-left: 1px solid #181818;
+    padding: 8px 12px;
+    margin-bottom: 18px;
+    border-radius: 4px;
+    font-size: 0.97em;
+}
+
+/* Focus and hover for accessibility */
+.amazon-block-fieldset:focus-within {
+    box-shadow: 0 0 0 2px #38bdf8;
+    border-color: #38bdf8;
+}

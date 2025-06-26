@@ -130,7 +130,7 @@ class AmazonProductSnippetBlock(StructBlock):
         required=False,
         help_text='Price font weight'
     )
-    
+
     price_color = CharBlock(
         required=False,
         help_text='Price text color (e.g., #009900 or darkgreen)',
@@ -168,6 +168,18 @@ class AmazonProductSnippetBlock(StructBlock):
         help_text='Font size for button text'
     )
 
+    button_text_weight = ChoiceBlock(
+        choices=[
+            ('400', 'Normal'),
+            ('500', 'Medium'),
+            ('600', 'Semi-bold (Default)'),
+            ('700', 'Bold'),
+        ],
+        default='600',
+        required=False,
+        help_text="Button text weight."
+    )
+    
     button_text_color = CharBlock(
         required=False,
         help_text='Button text color',
@@ -185,6 +197,13 @@ class AmazonProductSnippetBlock(StructBlock):
         help_text='Button shape style'
     )
 
+    button_color = CharBlock(
+        required=False,
+        help_text='Button background color (e.g., #ff9900 or orange)',
+        max_length=20,
+        default='#ff9900'
+    )
+
     button_corner_radius = IntegerBlock(
         required=False,
         help_text='Corner radius when using rounded style',
@@ -200,7 +219,3 @@ class AmazonProductSnippetBlock(StructBlock):
         form_classname = "amazon-product-block-form struct-block"
         form_template = "wagtail_amazon_paapi/blocks/amazon_product_snippet_form.html"
 
-    class Media:
-        css = {
-            "all": ["wagtail_amazon_paapi/css/amazon_product_block.css"]
-        }

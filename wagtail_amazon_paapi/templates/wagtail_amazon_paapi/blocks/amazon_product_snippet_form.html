@@ -1,32 +1,84 @@
 {% load wagtailadmin_tags %}
 <div class="{{ classname }}">
-    {% include "wagtailadmin/shared/field.html" with field=children.product %}
-    <fieldset>
-        <legend>Layout</legend>
-        {% include "wagtailadmin/shared/field.html" with field=children.display_style %}
-        {% include "wagtailadmin/shared/field.html" with field=children.max_width %}
-        {% include "wagtailadmin/shared/field.html" with field=children.max_height %}
-        {% include "wagtailadmin/shared/field.html" with field=children.block_alignment %}
-        {% include "wagtailadmin/shared/field.html" with field=children.text_alignment %}
-        {% include "wagtailadmin/shared/field.html" with field=children.background_color %}
-    </fieldset>
-    <fieldset>
-        <legend>Typography</legend>
-        {% include "wagtailadmin/shared/field.html" with field=children.font_family %}
-        {% include "wagtailadmin/shared/field.html" with field=children.title_size %}
-        {% include "wagtailadmin/shared/field.html" with field=children.title_weight %}
-        {% include "wagtailadmin/shared/field.html" with field=children.title_color %}
-    </fieldset>
-    <fieldset>
-        <legend>Price</legend>
-        {% include "wagtailadmin/shared/field.html" with field=children.price_size %}
-        {% include "wagtailadmin/shared/field.html" with field=children.price_weight %}
-        {% include "wagtailadmin/shared/field.html" with field=children.price_color %}
-        {% include "wagtailadmin/shared/field.html" with field=children.button_text %}
-        {% include "wagtailadmin/shared/field.html" with field=children.button_size %}
-        {% include "wagtailadmin/shared/field.html" with field=children.button_text_size %}
-        {% include "wagtailadmin/shared/field.html" with field=children.button_text_color %}
-        {% include "wagtailadmin/shared/field.html" with field=children.button_style %}
-        {% include "wagtailadmin/shared/field.html" with field=children.button_corner_radius %}
-    </fieldset>
+    {% if help_text %}
+        <span>
+            <div class="help">
+                {% icon name="help" classname="default" %}
+                {{ help_text }}
+            </div>
+        </span>
+    {% endif %}
+
+    {% for child in children.values %}
+        {# Open a new fieldset if first, or if group changes #}
+        {% if forloop.first %}
+            <fieldset class="amazon-block-fieldset"><legend>
+                {% if child.block.name in "display_style max_width max_height block_alignment text_alignment background_color" %}
+                    Layout
+                {% elif child.block.name in "font_family title_size title_weight title_color" %}
+                    Typography
+                {% elif child.block.name in "price_size price_weight price_color" %}
+                    Price
+                {% elif child.block.name in "button_text button_size button_text_size button_text_color button_text_weight button_color button_style button_corner_radius" %}
+                    Button
+                {% else %}
+                    Other
+                {% endif %}
+            </legend>
+        {% else %}
+            {% ifchanged %}
+                {% if child.block.name in "display_style max_width max_height block_alignment text_alignment background_color" %}
+                    {% if not prev_group == "layout" %}
+                        </fieldset>
+                        <fieldset class="amazon-block-fieldset"><legend>Layout</legend>
+                    {% endif %}
+                {% elif child.block.name in "font_family title_size title_weight title_color" %}
+                    {% if not prev_group == "typography" %}
+                        </fieldset>
+                        <fieldset class="amazon-block-fieldset"><legend>Typography</legend>
+                    {% endif %}
+                {% elif child.block.name in "price_size price_weight price_color" %}
+                    {% if not prev_group == "price" %}
+                        </fieldset>
+                        <fieldset class="amazon-block-fieldset"><legend>Price</legend>
+                    {% endif %}
+                {% elif child.block.name in "button_text button_size button_text_size button_text_color button_text_weight button_color button_style button_corner_radius" %}
+                    {% if not prev_group == "button" %}
+                        </fieldset>
+                        <fieldset class="amazon-block-fieldset"><legend>Button</legend>
+                    {% endif %}
+                {% else %}
+                    {% if not prev_group == "other" %}
+                        </fieldset>
+                        <fieldset class="amazon-block-fieldset"><legend>Other</legend>
+                    {% endif %}
+                {% endif %}
+            {% endifchanged %}
+        {% endif %}
+
+        <div class="w-field" data-field data-contentpath="{{ child.block.name }}">
+            {% if child.block.label %}
+                <label class="w-field__label" {% if child.id_for_label %}for="{{ child.id_for_label }}"{% endif %}>
+                    {{ child.block.label }}{% if child.block.required %}<span class="w-required-mark">*</span>{% endif %}
+                </label>
+            {% endif %}
+            {{ child.render_form }}
+        </div>
+
+        {# Close the last fieldset at the end #}
+        {% if forloop.last %}</fieldset>{% endif %}
+
+        {# Set prev_group for next iteration #}
+        {% if child.block.name in "display_style max_width max_height block_alignment text_alignment background_color" %}
+            {% with prev_group="layout" %}{% endwith %}
+        {% elif child.block.name in "font_family title_size title_weight title_color" %}
+            {% with prev_group="typography" %}{% endwith %}
+        {% elif child.block.name in "price_size price_weight price_color" %}
+            {% with prev_group="price" %}{% endwith %}
+        {% elif child.block.name in "button_text button_size button_text_size button_text_color button_text_weight button_color button_style button_corner_radius" %}
+            {% with prev_group="button" %}{% endwith %}
+        {% else %}
+            {% with prev_group="other" %}{% endwith %}
+        {% endif %}
+    {% endfor %}
 </div>
