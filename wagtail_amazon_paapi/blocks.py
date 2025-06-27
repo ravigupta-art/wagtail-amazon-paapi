@@ -16,6 +16,25 @@ class AmazonProductSnippetBlock(StructBlock):
         required=True,
         help_text='Choose how this product should be displayed'
     )
+
+    #Adervertisement heading options
+    heading_text = CharBlock(
+        required=False,
+        help_text='Custom advertisement heading text (default: "Advertisement")',
+        max_length=150,
+        default='Advertisement'
+    )
+
+    heading_text_alignment = ChoiceBlock(
+        choices=[
+            ('left', 'Left'),
+            ('center', 'Center'),
+            ('right', 'Right'),
+        ],
+        default='left',
+        required=False,
+        help_text='Alignment of the advertisement heading text'
+    )
     
     # Dimension options
     max_width = IntegerBlock(
