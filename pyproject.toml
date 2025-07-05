@@ -23,3 +23,16 @@ dependencies = [
     "wagtail>=7.0.1",
     "python-amazon-paapi>=5.0.1",
 ]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["wagtail_amazon_paapi"]
+
+[tool.setuptools.package-data]
+"wagtail_amazon_paapi" = [
+  "templates/wagtail_amazon_paapi/admin/panels/*.html",
+  "templates/wagtail_amazon_paapi/blocks/*.html",
+  "static/wagtail_amazon_paapi/css/*.css",
+]
