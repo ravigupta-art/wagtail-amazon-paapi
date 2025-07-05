@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wagtail_amazon_paapi"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="Ravi Gupta", email="ravi.opensource@protonmail.com" },
 ]
