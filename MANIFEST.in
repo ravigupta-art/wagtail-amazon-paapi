@@ -1,0 +1,2 @@
+recursive-include wagtail_amazon_paapi/templates *.html
+recursive-include wagtail_amazon_paapi/static    *.css
